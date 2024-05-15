@@ -31,4 +31,18 @@ deactivate
 Whenever you want to work on the project, make sure to source the environment before running the code.
 
 
+# Execution
 
+## Motion detection demo
+
+To run the motion detection demo, first source the environment:
+
+```bash
+source venv/bin/activate
+```
+
+Then run the following command:
+
+```bash
+python src/motion-demo.py
+```
