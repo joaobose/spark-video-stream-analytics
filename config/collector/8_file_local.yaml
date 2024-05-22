@@ -1,0 +1,23 @@
+camera:
+    fps: 60
+    display: true
+    width: 1024
+    height: 576
+    urls:
+        - 'resources/walk.mp4'
+        - 'resources/walk.mp4'
+        - 'resources/walk.mp4'
+        - 'resources/walk.mp4'
+        - 'resources/walk.mp4'
+        - 'resources/walk.mp4'
+        - 'resources/walk.mp4'
+        - 'resources/walk.mp4'
+    ids:
+        - 'vid-walk-1'
+        - 'vid-walk-2'
+        - 'vid-walk-3'
+        - 'vid-walk-4'
+        - 'vid-walk-5'
+        - 'vid-walk-6'
+        - 'vid-walk-7'
+        - 'vid-walk-8'

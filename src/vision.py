@@ -11,6 +11,10 @@ def check_motion_v1(prev_frame, current_frame):
 
     See the original implementation at:
     https://github.com/baghelamit/video-stream-analytics/blob/master/video-stream-processor/src/main/java/com/iot/video/app/spark/processor/VideoMotionDetector.java
+
+    Args:
+    - `prev_frame`: opencv previous frame
+    - `current_frame`: opencv current frame
     """
     # Copy current frame (for drawing)
     current_frame_copy = current_frame.copy()

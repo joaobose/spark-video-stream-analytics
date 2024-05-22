@@ -1,0 +1,11 @@
+camera:
+    fps: 60
+    display: true
+    width: 1024
+    height: 576
+    urls:
+        - 'resources/car.mp4'
+        - 'resources/walk.mp4'
+    ids:
+        - 'vid-car'
+        - 'vid-walk'
