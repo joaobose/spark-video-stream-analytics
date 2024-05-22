@@ -4,4 +4,5 @@ opencv-python
 pyyaml
 matplotlib
 scipy
-kafka-python==2.0.2
+confluent-kafka
+kafka-python

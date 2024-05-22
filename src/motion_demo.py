@@ -33,11 +33,14 @@ while not DONE:
             break
 
         # Check for motion between the previous and current frames
-        motion_detected, frame_with_motion = check_motion_v1(
+        motion_detected, frame_with_motion, frame_diff = check_motion_v1(
             prev_frame, current_frame)
 
         # Display the frame with motion
         cv.imshow("Frame", frame_with_motion)
+
+        # Display the difference map
+        cv.imshow("Frame Diff", frame_diff)
 
         # Update the previous frame
         prev_frame = current_frame
