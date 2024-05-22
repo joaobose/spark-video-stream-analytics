@@ -33,16 +33,26 @@ Whenever you want to work on the project, make sure to source the environment be
 
 # Execution
 
-## Motion detection demo
-
-To run the motion detection demo, first source the environment:
+Before running the code, make sure to source the environment:
 
 ```bash
 source venv/bin/activate
 ```
 
-Then run the following command:
+## Motion detection demo
+
+To run the motion detection demo, run the following command:
 
 ```bash
 python src/motion-demo.py
 ```
+
+## Video stream collector
+
+To run the video stream collector, run the following command:
+
+```bash
+python src/video-stream-collector.py --config CONFIG
+```
+
+Where config is the path to the configuration file. Multiple example configuration files can be found in the [`config/collector`](./config/collector) directory.
