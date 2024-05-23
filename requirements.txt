@@ -4,3 +4,4 @@ opencv-python
 pyyaml
 matplotlib
 scipy
+pyspark==3.5.1
