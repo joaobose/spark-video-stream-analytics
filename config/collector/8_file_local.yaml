@@ -21,3 +21,13 @@ camera:
         - 'vid-walk-6'
         - 'vid-walk-7'
         - 'vid-walk-8'
+
+kafka:
+  bootstrap.servers: "localhost:9092"
+  topic: "video-stream-event"
+  acks: "all"
+  retries: 1
+  batch.size: 20971520
+  linger.ms: 5
+  compression.type: "gzip"
+  max.request.size: 10485760 # 10 mb
