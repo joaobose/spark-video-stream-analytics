@@ -1,6 +1,6 @@
 import cv2 as cv
 
-from vision import check_motion_v1
+from vision import check_motion_v1, check_motion_v2
 
 SAMPLE_VIDEO = "./resources/car.mp4"
 
