@@ -4,5 +4,6 @@ opencv-python
 pyyaml
 matplotlib
 scipy
+pyspark==3.5.1
 confluent-kafka
 kafka-python
