@@ -56,4 +56,57 @@ python src/video-stream-collector.py --config CONFIG
 ```
 
 Where config is the path to the configuration file. Multiple example configuration files can be found in the [`config/collector`](./config/collector) directory.
->>>>>>> main
+
+## Kafka local setup
+
+### Prerequisites
+
+1. Java: Kafka and Zookeeper require Java to run. Make sure you have Java installed:
+ ```sh
+ sudo apt update
+ sudo apt install default-jdk
+ java-version
+ ```
+
+2. Download Kafka:
+ - Download the latest version of Kafka from [Apache Kafka Downloads](https://kafka.apache.org/downloads).
+ - Extract the downloaded file:
+ ```sh
+ tar -xzf kafka_2.13-3.7.0.tgz
+ sudo mv kafka_2.13-3.7.0 /opt/kafka
+ ```
+There is no need to download Zookeeper separately because it comes bundled with Kafka.
+
+### Setting
+
+Add the following lines to your `~/.bashrc` or `~/.zshrc` file to set the environment variables:
+
+```sh
+# Zookeeper
+export ZOO_HOME="/opt/kafka"
+export PATH=$PATH:$ZOO_HOME/bin
+
+# Kafka
+export KAFKA_HOME="/opt/kafka"
+export PATH=$PATH:$KAFKA_HOME/bin
+```
+
+Then, reload the shell configuration file:
+
+```sh
+source ~/.bashrc
+```
+
+### Start the Services
+
+To start Zookeeper, run the following command from the root directory of repository:
+
+```sh
+zookeeper-server-start.sh CONFIG/zookeeper.properties
+```
+
+To start Kafka, run the following command from the root directory of repository:
+
+```sh
+kafka-server-start.sh CONFIG/server.properties
+```
