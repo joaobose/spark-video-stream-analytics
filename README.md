@@ -97,16 +97,24 @@ Then, reload the shell configuration file:
 source ~/.bashrc
 ```
 
+### Create the Log Directory
+
+Create a directory for Kafka logs in the root directory of the project:
+
+```sh
+mkdir -p kafka-logs
+```
+
 ### Start the Services
 
 To start Zookeeper, run the following command from the root directory of repository:
 
 ```sh
-zookeeper-server-start.sh CONFIG/zookeeper.properties
+zookeeper-server-start.sh config/zookeeper.properties
 ```
 
 To start Kafka, run the following command from the root directory of repository:
 
 ```sh
-kafka-server-start.sh CONFIG/server.properties
+kafka-server-start.sh config/server.properties
 ```
