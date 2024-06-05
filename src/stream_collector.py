@@ -8,6 +8,7 @@ import argparse
 import base64
 import json
 from confluent_kafka import Producer
+from confluent_kafka.admin import AdminClient, NewTopic
 
 
 def load_config(file_path):
@@ -30,6 +31,32 @@ def delivery_report(err, msg):
         print(f"Failed message: {err}")
     else:
         print(f"Message delivered to {msg.topic()} [{msg.partition()}]")
+
+
+def create_kafka_topic(config, topic_name, num_partitions=3, replication_factor=1):
+    """
+    Creates a Kafka topic if it doesn't already exist.
+    
+    Args:
+    - config (dict): Configuration dictionary for the Kafka admin client.
+    - topic_name (str): Name of the topic to create.
+    - num_partitions (int): Number of partitions for the topic.
+    - replication_factor (int): Replication factor for the topic.
+    """
+    admin_client = AdminClient(config)
+    
+    topic_list = [NewTopic(topic=topic_name, num_partitions=num_partitions, replication_factor=replication_factor)]
+    
+    # Create the topic
+    fs = admin_client.create_topics(topic_list)
+    
+    # Wait for each operation to finish.
+    for topic, f in fs.items():
+        try:
+            f.result()  # The result itself is None
+            print(f"Topic {topic} created")
+        except Exception as e:
+            print(f"Failed to create topic {topic}: {e}")
 
 
 def stream_camera_worker(url, id, width, height, fps, display_queue, producer, topic, display=False):
@@ -80,8 +107,9 @@ def stream_camera_worker(url, id, width, height, fps, display_queue, producer, t
 
         # --------- Start of frame processing
         frame = cv.resize(frame, (width, height), interpolation=cv.INTER_CUBIC)
-        _, buffer = cv.imencode('.jpg', frame)
-        data = base64.b64encode(buffer).decode('utf-8')
+
+        # Encode frame to base64
+        encoded_data = base64.b64encode(frame.tobytes()).decode('utf-8')
 
         timestamp = int(time.time() * 1000)
 
@@ -91,8 +119,8 @@ def stream_camera_worker(url, id, width, height, fps, display_queue, producer, t
             "timestamp": timestamp,
             "rows": frame.shape[0],
             "cols": frame.shape[1],
-            "type": str(frame.dtype),
-            "data": data
+            "type": frame.dtype.name,
+            "data": encoded_data
         }
 
         # Send JSON message to Kafka topic
@@ -185,13 +213,16 @@ if __name__ == '__main__':
         'retries': int(config['kafka']['retries']),
         'batch.size': int(config['kafka']['batch.size']),
         'linger.ms': int(config['kafka']['linger.ms']),
-        'message.max.bytes': int(config['kafka']['max.request.size']),
+        'message.max.bytes': int(config['kafka']['message.max.bytes']),
         'compression.type': config['kafka']['compression.type']
     }
 
+    # Create kafka topic
+    topic = config['kafka']['topic']
+    create_kafka_topic(kafka_config, topic)
+
     # Create a new Producer instance using the provided configuration dict
     producer = Producer(kafka_config)
-    topic = config['kafka']['topic']
 
     start_camera_stream(URLS, IDS, WIDTH, HEIGHT, FPS, producer, topic, DISPLAY)
     producer.flush()
