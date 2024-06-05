@@ -97,13 +97,15 @@ Then, reload the shell configuration file:
 source ~/.bashrc
 ```
 
-### Create the Log Directory
+### Create the necessary directories
 
-Create a directory for Kafka logs in the root directory of the project:
+Create a directory for Kafka logs and a directory for Zookeeper data in the root directory of the project:
 
 ```sh
 mkdir -p kafka-logs
+mkdir -p zookeeper-data
 ```
+
 
 ### Start the Services
 
