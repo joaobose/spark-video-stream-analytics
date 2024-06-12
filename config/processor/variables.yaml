@@ -1,0 +1,9 @@
+spark:
+  master_url: "local[*]"
+
+
+kafka:
+  bootstrap_servers: "localhost:9092"
+  topic: "video-stream-event"
+  max_batch_size: 20971520
+  max_poll_records: 10
