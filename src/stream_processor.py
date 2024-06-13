@@ -90,6 +90,5 @@ class VideoStreamProcessor:
   
 
 if __name__ == "__main__":
-  processor = VideoStreamProcessor()
-  df = processor.read_from_kafka()
+  processor = VideoStreamProcessor("../config/processor/variables.yaml")
   processor.process_data()
