@@ -161,3 +161,7 @@ cython_debug/
 
 
 **/.DS_Store
+
+
+# Model weights
+yolov3.weights
