@@ -3,7 +3,7 @@ spark:
 
 
 kafka:
-  bootstrap_servers: "localhost:9092"
+  bootstrap_servers: "localhost:29092"
   topic: "video-stream-event"
   max_batch_size: 20971520
   max_poll_records: 10
