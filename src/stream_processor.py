@@ -10,10 +10,11 @@ from config.processor.schemas import video_stream_schema, movement_by_frame_outp
 from src.vision import check_motion_v1
 
 class VideoStreamProcessor:
-
   def __init__(self, config_path: str) -> None:
+    # Configuration is loaded from a yaml file
     self.config = load_config(config_path)
 
+    # Create spark session with SQL support
     self.spark = (SparkSession
       .builder
       .appName("VideoStreamProcessor")
@@ -23,6 +24,19 @@ class VideoStreamProcessor:
       .getOrCreate())
 
   def read_from_kafka(self):
+    """Reads video stream data from Kafka.
+
+    Configuration for Kafka is loaded from the configuration file.
+
+    The data that is returns follows a schema defined in configuration and 
+    follows the structure:
+    - cameraId: String
+    - timestamp: Long
+    - rows: Integer
+    - cols: Integer
+    - type: String
+    - data: String
+    """
     return (self.spark
       .readStream
       .format("kafka")
@@ -36,6 +50,22 @@ class VideoStreamProcessor:
       .select("json.*"))
   
   def movement_by_frame(self, values):
+    """Processes video stream data to detect motion by frame.
+
+    The function receives a list of values, where each value is a tuple
+    containing a timestamp and a base64 encoded image. The function will
+    decode the image, and check for motion between frames.
+
+    For checking the motion, it is being used currently the function 
+    check_motion_v1, that replicates the original logic from the
+    original article.
+
+    The output will be a list of tuples, where each tuple contains a timestamp
+    and a boolean indicating if there was motion in the frame.
+
+    The output schema is defined in the configuration file.
+    """
+  
     # Sort by timestamp
     sorted_values = sorted(values, key=lambda x: x[0])
 
@@ -51,22 +81,26 @@ class VideoStreamProcessor:
       nparr = np.frombuffer(decoded_data, np.uint8)
       frame = cv.imdecode(nparr, cv.IMREAD_COLOR)
 
-      # Check for motion
+      # Apply custom motion detection function in between frames
       if prev_frame is not None:
-          has_movement, _, _ = check_motion_v1(prev_frame, frame)
-          output.append((t, has_movement))
+        has_movement, _, _ = check_motion_v1(prev_frame, frame)
+        output.append((t, has_movement))
       else:
-          output.append((t, False))
+        output.append((t, False))
 
       prev_frame = frame
 
     return output
-
-  def define_function(self, fun):
-    return udf(fun, movement_by_frame_output_schema)
   
   def process_data(self):
-    uf_fun = self.define_function(self.movement_by_frame)
+    """Processes video stream data to detect motion by frame.
+
+    The function reads video stream data from Kafka, processes it to detect
+    motion by frame, and writes the results to the console.
+
+    The output schema is defined in the configuration file.
+    """
+    uf_fun = udf(self.movement_by_frame, movement_by_frame_output_schema)
 
     df = self.read_from_kafka()
 
@@ -77,6 +111,7 @@ class VideoStreamProcessor:
           )
       ).alias("movement_by_frame")
     )
+
     # Process data
     query = (
       processed_df
