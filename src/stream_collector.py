@@ -1,4 +1,3 @@
-import yaml
 import cv2 as cv
 import threading
 from os import path
@@ -9,18 +8,7 @@ import base64
 import json
 from confluent_kafka import Producer
 
-
-def load_config(file_path):
-    """
-    Loads camera stream configuration from a yaml file.
-    """
-
-    with open(file_path, 'r') as stream:
-        try:
-            return yaml.safe_load(stream)
-        except yaml.YAMLError as exc:
-            print(exc)
-            return None
+from src.utils import load_config
 
 def delivery_report(err, msg):
     """
