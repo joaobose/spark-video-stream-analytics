@@ -16,9 +16,6 @@ RUNSERVER:
 CLOSESERVER:
 	$(docker_compose) down
 
-COLLECTSTATIC:
-	$(exec) collectstatic --noinput
-
 BUILDSERVER:
 	$(docker_compose) build
 
