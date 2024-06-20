@@ -23,7 +23,7 @@ camera:
         - 'vid-walk-8'
 
 kafka:
-  bootstrap.servers: "localhost:29092"
+  bootstrap.servers: "kafka:9092"
   topic: "video-stream-event"
   acks: "all"
   retries: 1

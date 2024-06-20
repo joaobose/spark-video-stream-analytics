@@ -1,6 +1,6 @@
 # General vars
 
-docker_file = ../docker/kafka/docker-compose.yml
+docker_file = ../docker/docker-compose.yml
 docker_compose = sudo docker-compose -f $(docker_file)
 
 # Commands

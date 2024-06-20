@@ -1,9 +1,18 @@
-spark:
-  master_url: "local[*]"
+# spark:
+#   master_url: "local[*]"
 
+
+# kafka:
+#   bootstrap_servers: "localhost:29092"
+#   topic: "video-stream-event"
+#   max_batch_size: 20971520
+#   max_poll_records: 10
+
+spark:
+  master_url: "spark://spark-master:7077"
 
 kafka:
-  bootstrap_servers: "localhost:29092"
+  bootstrap_servers: "kafka:9092"
   topic: "video-stream-event"
   max_batch_size: 20971520
   max_poll_records: 10
