@@ -40,7 +40,7 @@ Spark runs on Java 8/11/17, Scala 2.12/2.13, Python 3.8+, and R 3.5+. Java 8 pri
 
 So, in order to run the project without issues, make sure you have Java 8/11/17 installed on your machine.
 
-## Installation of Spark
+### Installation of Spark
 
 Even though the project is using the pyspark library, it is necessary to have the Spark service installed and running on your machine when launching thr project.
 
@@ -63,7 +63,7 @@ pyspark
 
 If you see the Spark shell, then the installation was successful.
 
-## Kafka and Zookeper
+### Kafka and Zookeper
 
 Even tho the project `kafka-python` library to interact with Kafka, it is necessary to have Kafka and Zookeeper services running on your machine. In order to achieve that, those environments were configured to work through a **Docker** container.
 
