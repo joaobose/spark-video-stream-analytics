@@ -1,58 +1,3 @@
-# # Usa una imagen base de Python
-# FROM python:3.8-slim
-
-# # Establece el directorio de trabajo en el contenedor
-# WORKDIR /app
-
-# # Instala las dependencias del sistema necesarias para opencv
-# RUN apt-get update && apt-get install -y \
-#     libgl1-mesa-glx \
-#     libglib2.0-0
-
-# # Copia los archivos requeridos a la imagen
-# COPY ../src/stream_collector.py /app/
-# COPY ../requirements.txt/ /app/
-# COPY ../config /app/config
-
-# # Instala las dependencias de Python
-# RUN pip install --no-cache-dir -r requirements.txt
-
-# # Comando para ejecutar el script
-# CMD ["python", "stream_collector.py"]
-
-# Usa una imagen base de Python
-# FROM python:3.8-slim
-
-# # Establece el directorio de trabajo en el contenedor
-# WORKDIR /app
-
-# # Instala las dependencias del sistema necesarias para opencv y qt
-# RUN apt-get update && apt-get install -y \
-#     libgl1-mesa-glx \
-#     libglib2.0-0 \
-#     libx11-6 \
-#     libxcb1 \
-#     libx11-xcb1 \
-#     libxcb-render0 \
-#     libxcb-shape0 \
-#     libxcb-shm0 \
-#     wget
-
-# # Añadir wait-for-it script para esperar que Kafka esté listo
-# RUN wget https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh && \
-#     chmod +x wait-for-it.sh
-
-# # Copia los archivos requeridos a la imagen
-# COPY ../src/stream_collector.py /app/
-# COPY ../requirements.txt /app/
-# COPY ../config /app/config
-
-# # Instala las dependencias de Python
-# RUN pip install --no-cache-dir -r requirements.txt
-
-# # Comando para ejecutar el script
-# CMD ["./wait-for-it.sh", "kafka:9092", "--", "python", "stream_collector.py"]
-
 # Usa una imagen base de Python
 FROM python:3.8-slim
 
@@ -89,9 +34,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY ../src/stream_collector.py /app/
 COPY ../config /app/config
 COPY ../resources /app/resources
-
-# Instala las dependencias de Python
-RUN pip install --no-cache-dir -r requirements.txt
 
 # Comando para ejecutar el script usando Xvfb
 CMD ["./wait-for-it.sh", "kafka:9092", "--", "xvfb-run", "-a", "python", "stream_collector.py"]
