@@ -23,11 +23,11 @@ camera:
         - 'vid-walk-8'
 
 kafka:
-  bootstrap.servers: "kafka:9092"
+  bootstrap.servers: "localhost:29092"
   topic: "video-stream-event"
   acks: "all"
   retries: 1
-  batch.size: 20971520
+  batch.size: 943718400
   linger.ms: 5
   compression.type: "gzip"
-  max.request.size: 10485760 # 10 mb
+  max.request.size: 943718400

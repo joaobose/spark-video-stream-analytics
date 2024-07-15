@@ -12,7 +12,7 @@ spark:
   master_url: "spark://spark-master:7077"
 
 kafka:
-  bootstrap_servers: "kafka:9092"
+  bootstrap_servers: kafka:9092
   topic: "video-stream-event"
   max_batch_size: 20971520
   max_poll_records: 10
