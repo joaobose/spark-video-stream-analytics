@@ -70,49 +70,70 @@ Even tho the project `kafka-python` library to interact with Kafka, it is necess
 So, having docker installed and working on your machine is a requirement to run the project.
 
 Now, the following steps will guide you through the installation of the container with Kafka and Zookeeper:
-1. Run the following command to build the container:
+
+### Start services
+
+In the project root, run the following command to build the containers:
 
 ```bash
-make BUILDSERVER
+make build
 ```
 
-1. Run the following command to start the container:
+To stand up Kafka and Spark services, run:
 
 ```bash
-make RUNSERVER
+make run
 ```
 
-When you finish working with the project, make sure to stop the container with the following command:
+This command will start both Kafka and Spark. You can also build Spark services with 3 workers using:
 
 ```bash
-make STOPSERVER
+make run-scaled
 ```
 
-## Execution
+### Script Execution
 
-Before running the code, make sure to source the environment:
+Before running the scripts, you must create and activate a virtual environment:
 
 ```bash
+virtualenv venv
 source venv/bin/activate
 ```
 
-or if you are using Windows:
+#### Running `stream_collector.py`
+
+To run the video stream collector, run the following command:
 
 ```bash
-.\venv\Scripts\activate
+python src/video-stream-collector.py --config {{ CONFIG_FILE }}
 ```
+Where CONFIG_FILE is the path to the configuration file. Multiple example configuration files can be found in the config/collector directory.
 
-### Services setup
-
-Before running either the video stream collector or the video stream processor, we need to run some services to ensure the project executes correctly. These services are: Zookeeper, Kafka, and Spark.
-
-Currently, Kafka and Zookeper are running on a Docker container. To start the container, run the following command:
+Example
 
 ```bash
-make RUNSERVER
+python src/stream_collector.py --config config/collector/file_cam_local.yaml
 ```
 
-### Motion detection demo
+#### Running `stream_processor.py`
+
+To run `stream_processor.py`, run:
+
+
+```bash
+make submit app=src/stream_processor.py
+```
+
+### Additional Commands for Spark
+
+There are several commands to build and manage standalone Spark cluster. You can check the Makefile to see them all. The simplest command to build is:
+
+```bash
+make build
+```
+### Local execution
+
+#### Motion detection demo
 
 To run the motion detection demo, run the following command:
 
@@ -120,7 +141,7 @@ To run the motion detection demo, run the following command:
 python src/motion-demo.py
 ```
 
-### Video Stream Collector
+#### Video Stream Collector
 
 To run the video stream collector, run the following command:
 
@@ -132,7 +153,7 @@ Where `CONFIG_FILE` is the path to the configuration file. Multiple example conf
 
 All of the configuration files can be used to test the video stream collector.
 
-### Video Stream Processor
+#### Video Stream Processor
 
 To run the video stream processor, we need to have the Spark service running. Once the service is running, run the following command:
 
