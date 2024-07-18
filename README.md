@@ -124,7 +124,7 @@ To run `stream_processor.py`, run:
 make submit app=src/stream_processor.py
 ```
 
-### Additional Commands for Spark
+#### Additional Commands for Spark
 
 There are several commands to build and manage standalone Spark cluster. You can check the Makefile to see them all. The simplest command to build is:
 
