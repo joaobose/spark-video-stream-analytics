@@ -17,9 +17,29 @@ With the Minio storage, the user will be able to use the project completelly loc
 
 #### Local use
 
-#### Cloud use
+In order to use Minio locally, the user must have the Docker service installed and running on the machine. If you don't have Docker installed, you can download it from the [official website](https://docs.docker.com/get-docker/).
+
+After installing Docker, the user can run the following command to start the Minio service through a compose:
+
+```bash
+# Run from the docker/minio directory
+docker-compose up -d
+```
+
+This command will start the Minio service on the port `9000` or `9001`. To access the Minio dashboard, open your browser and go to one of those URLs in localhost.
 
 ### Execution
+
+Once the Docker service is running, the user can access the Minio dashboard by opening the proper URL in the browser. There, all of the own Minio buckets and configurations can be managed. 
+
+It is important that the user configures the Minio service with the proper credentials and configurations in order to use it properly: 
+
+1. In the `docker-compose.yml` file, the user can set the `MINIO_ACCESS_KEY` and `MINIO_SECRET_KEY` environment variables to the desired values which configures the access variables for the Minio service per se. The first time the minio service is started it will use these variables to create access rights that later will be used to be able to access the dashboard and managed buckets.
+2. Bucket credentials for the file uploader. It will be needed `access_key` and `secret_key` to be able to upload files to the bucket. These credentials can be set in the `config/processor/variables.yaml` file.
+
+### AWS Interusability
+
+Initially only the variables are necessary for connecting to the Minio service, more information about configuration can be obtained in the [Official Minio Documentation (AWS Secret Manager)](https://min.io/docs/kes/integrations/aws-secrets-manager/).
 
 ### API Reference
 

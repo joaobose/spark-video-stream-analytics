@@ -2,12 +2,17 @@
 from minio import Minio
 from minio.error import S3Error
 
+from stream_collector import load_config
+
 def main():
+  # load the configuration from the environment
+  config = load_config("../../config/processor/variables.yaml")
+
   # Create a client with the MinIO server playground, its access key
   # and secret key.
   client = Minio("localhost:9000",
-    access_key="LvrrzxEMuzo5s0lHnoiS",
-    secret_key="XAcp2yuH4djRbFgN9nGnAzjihir368ljkKVvrF2C",
+    access_key=config["minio"]["access_key"],
+    secret_key=config["minio"]["secret_key"],
     secure=False
   )
 

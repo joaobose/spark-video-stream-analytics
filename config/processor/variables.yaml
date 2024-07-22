@@ -16,3 +16,7 @@ kafka:
   topic: "video-stream-event"
   max_batch_size: 20971520
   max_poll_records: 10
+
+minio:
+  access_key: TEST_ACCESS
+  secret_key: TEST_SECRET
